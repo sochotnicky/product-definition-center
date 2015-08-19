@@ -496,7 +496,7 @@ class GlobalComponentLabelViewSet(viewsets.PDCModelViewSet):
         Show the global component labels by pagination, 20 items per page by default, and you can pass some parameters
         to filter the result.
 
-        ####__Request__####
+        __Request__
 
             curl -X GET -H "Content-Type: application/json" $URL:globalcomponentlabel-list:1$
 
@@ -508,37 +508,9 @@ class GlobalComponentLabelViewSet(viewsets.PDCModelViewSet):
 
         ``name``: label's name
 
-        ####__Response__####
+        __Response__: a paged list of following objects
 
-        ``count``: total number of the global component labels
-
-        ``next`` & ``previous``: pagination url for retrieving next or previous 20
-        global component labels
-
-        ``results``: global component labels list
-
-            HTTP/1.0 200 OK
-            Date: Mon, 20 Oct 2014 06:01:04 GMT
-            Content-Type: application/json
-            Allow: GET, POST, HEAD, OPTIONS
-            {
-                "count": 2,
-                "next": null,
-                "previous": null,
-                "results": [
-                    {
-                        "url": "$URL:label-detail:1$",
-                        "name": "label1",
-                        "description": "label1 description"
-                    },
-                    {
-                        "url": "$URL:label-detail:2$",
-                        "name": "label1",
-                        "description": "label1 description"
-                    }
-
-                ]
-            }
+        %(SERIALIZER)s
         """
         return super(GlobalComponentLabelViewSet, self).list(request, *args, **kwargs)
 
@@ -546,22 +518,13 @@ class GlobalComponentLabelViewSet(viewsets.PDCModelViewSet):
         """
         Show the specified global component label instance.
 
-        ####__Request__####
+        __Request__
 
             curl -X GET -H "Content-Type: application/json" $URL:globalcomponentlabel-detail:1:1$
 
-        ####__Response__####
+        __Response__:
 
-            HTTP/1.0 200 OK
-            Date: Mon, 20 Oct 2014 06:01:04 GMT
-            Content-Type: application/json
-            Allow: GET, POST, HEAD, OPTIONS
-
-            {
-                "url": "$URL:label-detail:1$",
-                "name": "label1",
-                "description": "label1 description"
-            }
+        %(SERIALIZER)s
         """
         return super(GlobalComponentLabelViewSet, self).retrieve(request, *args, **kwargs)
 
@@ -1338,24 +1301,9 @@ class BugzillaComponentViewSet(viewsets.PDCModelViewSet):
 
         %(FILTERS)s
 
-        __Response__:
+        __Response__: a paged list of following objects
 
-            # paged lists
-            {
-                "count": int,
-                "next": url,
-                "previous": url,
-                "results": [
-                    {
-                        "id": int,
-                        "name: string,
-                        "parent_component": string,
-                        "subcomponents": [
-                            ...
-                        ]
-                    }
-                    ...
-            }
+        %(SERIALIZER)s
         """
         return super(BugzillaComponentViewSet, self).list(request, *args, **kwargs)
 
@@ -1368,44 +1316,24 @@ class BugzillaComponentViewSet(viewsets.PDCModelViewSet):
 
         __Response__:
 
-            {
-                "id": int,
-                "name": string,
-                "parent_component": string,
-                "subcomponents": [
-                    ...
-                ]
-            }
+        %(SERIALIZER)s
         """
 
         return super(BugzillaComponentViewSet, self).retrieve(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
         """
-        __Method__:
-
-        PUT: for full fields update
-            {'name': 'new_name', 'parent_pk': new_parent_pk}
-
-        PATCH: for partial update
-            {'name': 'new_name'}
-            or
-            {'parent_pk': new_parent_pk}
-            or
-            {'name': 'new_name', 'parent_pk': new_parent_pk}
+        __Method__: `PUT`, `PATCH`
 
         __URL__: $LINK:bugzillacomponent-detail:instance_pk$
 
+        __Data__:
+
+        %(WRITABLE_SERIALIZER)s
+
         __Response__:
 
-            {
-                "id": int,
-                "name": string,
-                "parent_component": string,
-                "subcomponents": [
-                    ...
-                ]
-            }
+        %(SERIALIZER)s
 
         __NOTE__:
 
@@ -1482,20 +1410,11 @@ class BugzillaComponentViewSet(viewsets.PDCModelViewSet):
 
         __Data__:
 
-            {
-                'name':                          string,         # required
-                'parent_pk':                     int,            # optional
-            }
+        %(WRITABLE_SERIALIZER)s
+
         __Response__:
 
-            {
-                "id": int,
-                "name": string,
-                "parent_component": string,
-                "subcomponents": [
-                    ...
-                ]
-            }
+        %(SERIALIZER)s
 
         __NOTE__:
 
@@ -1613,17 +1532,11 @@ class GroupTypeViewSet(viewsets.PDCModelViewSet):
 
         __Data__:
 
-            {
-                "name":             string,     # required
-                "description":      string      # optional
-            }
+        %(WRITABLE_SERIALIZER)s
 
         __Response__:
 
-            {
-                "name":             string,
-                "description":      string|null
-            }
+        %(SERIALIZER)s
         """
         return super(GroupTypeViewSet, self).create(request, *args, **kwargs)
 
@@ -1637,21 +1550,9 @@ class GroupTypeViewSet(viewsets.PDCModelViewSet):
 
         %(FILTERS)s
 
-        __Response__:
+        __Response__: a paged list of following objects
 
-            # paged list
-            {
-                "count": int,
-                "next": url,
-                "previous": url,
-                "results": [
-                    {
-                        "name": string,
-                        "description": string
-                    },
-                    ...
-                ]
-            }
+        %(SERIALIZER)s
         """
         return super(GroupTypeViewSet, self).list(request, *args, **kwargs)
 
@@ -1663,10 +1564,7 @@ class GroupTypeViewSet(viewsets.PDCModelViewSet):
 
         __Response__:
 
-            {
-                "name": string,
-                "description": string
-            }
+        %(SERIALIZER)s
         """
         return super(GroupTypeViewSet, self).retrieve(request, *args, **kwargs)
 
@@ -1678,17 +1576,11 @@ class GroupTypeViewSet(viewsets.PDCModelViewSet):
 
         __Data__:
 
-            {
-                "name":             string,
-                "description":      string
-            }
+        %(WRITABLE_SERIALIZER)s
 
         __Response__:
 
-            {
-                "name":             string,
-                "description":      string
-            }
+        %(SERIALIZER)s
         """
         return super(GroupTypeViewSet, self).update(request, *args, **kwargs)
 
@@ -1739,13 +1631,7 @@ class GroupViewSet(viewsets.PDCModelViewSet):
 
         __Response__:
 
-            {
-                "release":          string,
-                "components":       list,
-                "description":      string,
-                "group_type":       string
-            }
-
+        %(SERIALIZER)s
         """
         return super(GroupViewSet, self).create(request, *args, **kwargs)
 
@@ -1759,23 +1645,9 @@ class GroupViewSet(viewsets.PDCModelViewSet):
 
         %(FILTERS)s
 
-        __Response__:
+        __Response__: a paged list of following objects
 
-            # paged list
-            {
-                "count": int,
-                "next": url,
-                "previous": url,
-                "results": [
-                    {
-                        "release": string,
-                        "components": list,
-                        "description": string,
-                        "group_type": string
-                    },
-                    ...
-                ]
-            }
+        %(SERIALIZER)s
         """
         return super(GroupViewSet, self).list(request, *args, **kwargs)
 
@@ -1787,13 +1659,7 @@ class GroupViewSet(viewsets.PDCModelViewSet):
 
         __Response__:
 
-            {
-                "release": string,
-                "components": list,
-                "description": string,
-                "group_type": string
-            }
-
+        %(SERIALIZER)s
         """
         return super(GroupViewSet, self).retrieve(request, *args, **kwargs)
 
@@ -1819,12 +1685,7 @@ class GroupViewSet(viewsets.PDCModelViewSet):
 
         __Response__:
 
-            {
-                "release": string,
-                "components": list,
-                "description": string,
-                "group_type": string
-            }
+        %(SERIALIZER)s
         """
         return super(GroupViewSet, self).update(request, *args, **kwargs)
 
@@ -1873,21 +1734,7 @@ class ReleaseComponentRelationshipViewSet(viewsets.PDCModelViewSet):
 
         __Response__:
 
-            {
-                "from_component": {
-                    "id":       release component id,
-                    "name":     string,
-                    "release":  string
-                },
-                "id":   relationship id,
-                "to_component": {
-                    "id":       release component id,
-                    "name":     string,
-                    "release":  string
-                },
-                "type": string
-            }
-
+        %(SERIALIZER)s
         """
         return super(ReleaseComponentRelationshipViewSet, self).create(request, *args, **kwargs)
 
@@ -1901,31 +1748,9 @@ class ReleaseComponentRelationshipViewSet(viewsets.PDCModelViewSet):
 
         %(FILTERS)s
 
-        __Response__:
+        __Response__: a paged list of following objects
 
-            # paged list
-            {
-                "count": int,
-                "next": url,
-                "previous": url,
-                "results": [
-                    {
-                        "from_component": {
-                            "id":       release component id,
-                            "name":     string,
-                            "release":  string
-                        },
-                        "id":   relationship id,
-                        "to_component": {
-                            "id":       release component id,
-                            "name":     string,
-                            "release":  string
-                        },
-                        "type": string
-                    },
-                    ...
-                ]
-            }
+        %(SERIALIZER)s
         """
         return super(ReleaseComponentRelationshipViewSet, self).list(request, *args, **kwargs)
 
@@ -1937,21 +1762,7 @@ class ReleaseComponentRelationshipViewSet(viewsets.PDCModelViewSet):
 
         __Response__:
 
-             {
-                "from_component": {
-                    "id":       release component id,
-                    "name":     string,
-                    "release":  string
-                },
-                "id":   relationship id,
-                "to_component": {
-                    "id":       release component id,
-                    "name":     string,
-                    "release":  string
-                },
-                "type":     string
-            }
-
+        %(SERIALIZER)s
         """
         return super(ReleaseComponentRelationshipViewSet, self).retrieve(request, *args, **kwargs)
 
@@ -1976,20 +1787,7 @@ class ReleaseComponentRelationshipViewSet(viewsets.PDCModelViewSet):
 
         __Response__:
 
-            {
-                "from_component": {
-                    "id":       release component id,
-                    "name":     string,
-                    "release":  string
-                },
-                "id":   relationship id,
-                "to_component": {
-                    "id":       release component id,
-                    "name":     string,
-                    "release":  string
-                },
-                "type":     string
-            }
+        %(SERIALIZER)s
         """
         return super(ReleaseComponentRelationshipViewSet, self).update(request, *args, **kwargs)
 
