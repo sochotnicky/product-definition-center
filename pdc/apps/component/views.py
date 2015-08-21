@@ -667,8 +667,6 @@ class ReleaseComponentTypeViewSet(viewsets.StrictQueryParamMixin,
 
         __URL__: $LINK:releasecomponenttype-list$
 
-        __Query params__:
-
         __Response__:
 
             # paged list
@@ -1900,8 +1898,6 @@ class ReleaseComponentRelationshipTypeViewSet(viewsets.StrictQueryParamMixin,
         __Method__: GET
 
         __URL__: $LINK:componentrelationshiptype-list$
-
-        __Query params__:
 
         __Response__:
 
