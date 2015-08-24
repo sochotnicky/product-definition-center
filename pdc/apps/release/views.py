@@ -18,7 +18,8 @@ from .forms import (ReleaseSearchForm, BaseProductSearchForm,
                     ProductSearchForm, ProductVersionSearchForm)
 from .serializers import (ProductSerializer, ProductVersionSerializer,
                           ReleaseSerializer, BaseProductSerializer,
-                          ReleaseTypeSerializer, ReleaseVariantSerializer)
+                          ReleaseTypeSerializer, ReleaseVariantSerializer,
+                          VariantTypeSerializer)
 from pdc.apps.common.viewsets import (ChangeSetModelMixin,
                                       ChangeSetCreateModelMixin,
                                       ChangeSetUpdateModelMixin,
@@ -1006,6 +1007,8 @@ class ReleaseVariantViewSet(ChangeSetModelMixin,
         All fields are required. The required architectures must already be
         present in PDC.
 
+        *type*: $LINK:varianttype-list$
+
         __Response__:
 
             {
@@ -1043,6 +1046,8 @@ class ReleaseVariantViewSet(ChangeSetModelMixin,
         Changing the architectures may involve deleting some. Note that
         repositories are connected to some Variant.Arch pair and it is not
         possible to remove an arch with any repositories..
+
+        *type*: $LINK:varianttype-list$
 
         __Response__:
 
@@ -1160,3 +1165,36 @@ class ReleaseVariantViewSet(ChangeSetModelMixin,
         __URL__: $LINK:variant-detail:release_id/variant_uid$
         """
         return super(ReleaseVariantViewSet, self).destroy(*args, **kwargs)
+
+
+class VariantTypeViewSet(StrictQueryParamMixin,
+                         mixins.ListModelMixin,
+                         viewsets.GenericViewSet):
+    """
+    API endpoint that allows variant_types to be viewed.
+    """
+    serializer_class = VariantTypeSerializer
+    queryset = models.VariantType.objects.all()
+
+    def list(self, request, *args, **kwargs):
+        """
+        __Method__: GET
+
+        __URL__: $LINK:varianttype-list$
+
+        __Response__:
+
+            # paged list
+            {
+                "count": int,
+                "next": url,
+                "previous": url,
+                "results": [
+                    {
+                        "name": string,
+                    },
+                    ...
+                ]
+            }
+        """
+        return super(VariantTypeViewSet, self).list(request, *args, **kwargs)
